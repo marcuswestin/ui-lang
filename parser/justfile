@@ -1,5 +1,5 @@
 gen-parser:
     bunx lezer-generator src/grammar/tao-lang.grammar -o src/gen/tao-lang-parser.js
 
-test:
+test: gen-parser
     bun run src/tests/test-parser.js

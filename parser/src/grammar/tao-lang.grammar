@@ -1,3 +1,5 @@
+@external propSource highlighting from "../grammar/highlight.js"
+
 @top File { (Identifier | Number | String)+ }
 
 @skip { space }

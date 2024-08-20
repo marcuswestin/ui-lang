@@ -10,6 +10,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@lezer/highlight": "^1.2.1",
     "@lezer/lr": "^1.4.2"
   }
 }
