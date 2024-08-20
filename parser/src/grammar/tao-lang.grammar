@@ -1,6 +1,10 @@
 @external propSource highlighting from "../grammar/highlight.js"
 
-@top File { (Identifier | Number | String)+ }
+@top File {
+  (StateDeclaration)+
+}
+
+Keyword<term> { @specialize[@name={term}]<Identifier, term> }
 
 @skip { space }
 
@@ -9,4 +13,28 @@
   Identifier { $[A-Za-z_]+ }
   Number { $[0-9]+ }
   String { '"' !["]* '"' }
+}
+
+StateDeclaration {
+  Keyword<"state"> Identifier StateObject
+}
+
+StateObject {
+  "{" StateProperty* "}"
+}
+
+StateProperty {
+  Identifier ":" stateType
+}
+
+stateType {
+  AtomicType | StateObject | StateArray
+}
+
+AtomicType {
+  Keyword<"String"> | Keyword<"Number"> | Keyword<"Boolean">
+}
+
+StateArray {
+  "[" stateType "]"
 }

@@ -2,4 +2,4 @@ gen-parser:
     bunx lezer-generator src/grammar/tao-lang.grammar -o src/gen/tao-lang-parser.js
 
 test: gen-parser
-    bun run src/tests/test-parser.js
+    bun run src/tests/test-all.js
