@@ -1,13 +1,78 @@
 # TODO
 
+## ui-lang
+
 - [ ] Make everything work
 - [ ] Start stubbing out tao-lang examples
   - [x] Create some tests for the examples
+  - [ ] Authentication
+    - [ ] Model out what RPC calls require auth?
+      - Nah - this should be on the server side.
+      - Errors! When not authenticated, that's a special kind of error
   - [ ] error handling
     - [ ] zig has some great features here
     - [ ] make it an error not to handle async state loading in-progress/errors
+    - [ ] Different kinds of errors
+      - Auth errors, Invalid input, Missing data, Unexpected/Server error, Network errors (timeouts, etc)
+      - Taking a long time to load notification!
+  - [ ] Notifications
+    - Yellow/warnings: loading taking a long time
+    - Expected errors: Timeout, incorrect username/password
   - [ ] Views
-  - [x] State
+    - [ ] Registering interaction pattern handlers
+      - Click, gestures, tap, drag, long press,
+      - Camera input gestures, touchpad
+    - [ ] Themes
+      - // see theme-exploration.ui
+      - [ ] Making theme property values available everywhere with type-safety, without having to specify a theme type definition. AppTheme + specifying theme variations for specific view hierarchies if wanted
+      - [ ] Spacing: TODO
+      - [ ] Text: Make all text views require specifying the typography used
+  - [ ] State
+    - [ ] async state
+      - fetchers, loading state, fetch error state
+    - [ ] State methods.
+      - [ ] Research: How do different languages do this?
+      - classes? structs with methods?
+      - object interfaces? protocols?
   - [ ] Handlers
 - [x] Create a basic parser using Lezer https://lezer.codemirror.net
   - [x] Read this: https://marijnhaverbeke.nl/blog/lezer.html
+- [ ] Consider different UI previews
+  - [ ] Previewing the code itself: https://youtu.be/5V1ynVyud4M?si=SOO3ChFxdn6FnX_i&t=942
+  - [ ] Create syntax for creating a Preview with a given state
+  - [ ] Consider how we can have multiple views onto the same code, with different purposes. One might fold all styling, another might display only event handlers; a third might display only the view in consideration.
+- [ ] Research Error handling
+  - [ ] https://notes.eatonphil.com/errors-and-zig.html
+  - [ ] https://www.linkedin.com/advice/1/how-do-programming-languages-handle-errors-skills-computer-science-603qc#:~:text=Different%20programming%20languages%20have%20different,values%2C%20pointers%2C%20or%20macros.
+  - [ ] https://blog.frankel.ch/error-handling/
+- [ ] Research UI View syntax
+  - [ ] Research Android: https://developer.android.com/courses/pathways/jetpack-compose-for-android-developers-2
+    - [x] Intro
+    - [x] Lazy layouts
+    - [x] Material You, latest version, Compose Material
+      - Theming, different color contrast needs, more
+      - Display L, Display M, Display S
+      - [ ] Colors
+        - Primary, Secondary, Tertiary, Error and Neutral; Background, SurfaceVariant
+          - onPrimary, onSecondary, onTertiary, onError, onNeutral, onBackground, onSurfaceVariant,
+          - primaryContainer, ..., surface, outline
+      - [ ] Fonts
+        - Based on USE and SIZE
+      - [ ] Shapes
+        - Rounded corner: none, extra small, small, medium, large, extra large
+      - [ ] Look at the theme builder:
+        - https://m3.material.io/blog/material-theme-builder
+      - [ ] Dynamic color!
+        - Basically, a color scheme that is generated from a background wallpaper
+      - [ ] Common navigation elements
+        - Top Bar: TopAppBar, CenterAlignedTopAppBar, Medium, Large
+        - Bottom: NavigationBar, NavigationRail, ModalNavigationDrawer, DismissableModalNavigationDrawer, PermanentNavigationDrawer
+      - [ ] KEY! Layout changes based on screen size
+        - It's important to consider Navigation in larger screens
+        - Is this something that is done in the APP LANG layer, or something that's built as views on top of it?
+    - [x] Codelab: https://developer.android.com/codelabs/jetpack-compose-theming?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fjetpack-compose-for-android-developers-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-theming#0
+    - [x] Watch https://www.youtube.com/watch?v=_qls2CEAbxI
+    - [x] https://www.youtube.com/watch?v=0mfCbXrYBPE
+    - [x] https://www.youtube.com/watch?v=1yiuxWK74vI
+    - [x] https://www.youtube.com/watch?v=l6rAoph5UgI
+    - [x] https://www.youtube.com/watch?v=OeC5jMV342A

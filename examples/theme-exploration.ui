@@ -1,0 +1,63 @@
+// Thoughts:
+//  An app could have a single declared app theme, which is then inferred by the entire source code
+//  to be available for views - e.g a Text() view would have to declare one of the typographies
+//  this way, views can use common typography and color styles without having to pass them as arguments
+//
+//  This does require allowing for using specified theme values when rendering a view hierarchy
+
+
+app theme Theme {
+    colors {
+        primary: Color.random()
+        secondary: Color.random()
+        background: Color.random()
+    }
+    typography {
+        TitleLarge: TextStyle(
+            fontWeight = FontWeight.Normal,
+            fontSize = 18.sp,
+            lineHeight = 28.sp,
+            letterSpacing = 0.sp
+        )
+        BodyMedium: TextStyle(
+            fontWeight = FontWeight.Medium,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            letterSpacing = 0.25.sp
+        )
+        LabelMedium: TextStyle(
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 12.sp,
+            lineHeight = 16.sp,
+            letterSpacing = 0.5.sp
+        )
+    }
+    spacing {
+        ...
+    }
+    shapes {
+        // Do we want this?
+        // https://developer.android.com/codelabs/jetpack-compose-theming?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fjetpack-compose-for-android-developers-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-theming#6
+        extraSmall: RounderCornerShape(4.dp)
+        small: RounderCornerShape(8.dp)
+        medium: RounderCornerShape(16.dp)
+        ...
+    }
+}
+
+view TestThemeView {
+    Text(TitleLarge, "Headline")
+    Text(BodyMedium, "Lorem ipsum dolores")
+}
+
+view TestView {
+    let theme1 = Theme.copy(colors: { primary: Color.red() })
+    let theme2 = Theme.copy(colors: { primary: Color.blue() })
+    TestThemeView(theme1)
+    TestThemeView(theme2)
+
+    Card(shape = MaterialTheme.shapes.medium) { /* card content */ }
+    FloatingActionButton(shape = MaterialTheme.shapes.large) { /* fab content */}
+}
+
+// To allow for customizing default styles for a view hierarcy

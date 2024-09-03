@@ -1,0 +1,99 @@
+environment Env {
+    apiHostUrl: String
+}
+
+errorStack errors
+
+error AuthError {
+
+}
+
+
+default error handler |err| {
+    Errors.collect(err)
+}
+
+rpc Rpc = rpc.types.HTTP(
+    host: Env.apiHostUrl
+    config: rpc.config.HTTP(
+        method: 'POST'
+        path: 'api/v1/'
+    )
+    endpoints {
+        login {
+            path: 'login',
+            arguments: {
+                username: string
+            }
+            response: {
+                token: Token
+            }
+        }
+    }
+)
+
+async state type User {
+    displayName: String
+
+    login(username: String) ! {
+        let res = ! http.Post(Env.apiHostUrl, '/user/login', http.PostBody({ username }))
+        // OR
+        let res = ! Rpc.login(username) handle |err| {
+            if (err.code == )
+        }
+
+    }
+}
+
+state Auth = {
+    User
+    async Token: {
+        Expires: DateTime
+        Secret: String
+    }
+}
+
+state Chats = {
+    chats: [{
+        name: String
+        messages: [{
+            from: User
+            DateTime
+            text: String
+        }]
+    }]
+}
+
+// Example view previews
+////////////////////////
+
+example state TestState {
+    generate state Auth
+    generate state Chats
+}
+
+preview MessageBubble1 { emulate: iPhone15 } MessageBubble(Message{
+    from: TestState.Auth.User
+    DateTime: DateTime.february(1, 2020, 12, 30)
+    text: "Hello"
+})
+
+preview MessageBubble2 { emulate: iPhone15 } MessageBubble(Message{
+    from: Chats.chats[0].messages[0].from
+    DateTime: DateTime.february(1, 2020, 12, 32)
+    text: "Hi!"
+})
+
+view MessageBubble(message: Message) {
+    let align = message.from == Auth.User ? 'end' : 'start')
+    Row(align) {
+        Image(message.user.avatarUrl)
+        Spacer(width: 2u)
+        Column {
+            Text(message.from.displayName, bold, primary)
+            Text(message.text)
+        }
+        Spacer
+        Text(message.DateTime.formats.relativeRecent, secondary)
+    }
+}
